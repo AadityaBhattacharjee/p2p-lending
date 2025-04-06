@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lender Registration</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .success-message {
+      margin-top: 20px;
+      padding: 15px;
+      border: 2px solid limegreen;
+      color: #caffbf;
+      background-color: rgba(0, 255, 0, 0.05);
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Lender Registration</h2>
+    <form method="POST">
+      <label for="name">Full Name:</label>
+      <input type="text" name="name" id="name" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="text" name="phone" id="phone" required>
+
+      <label for="funds">Available Funds (INR):</label>
+      <input type="number" name="funds" id="funds" required>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    {% if success %}
+      <div class="success-message">✅ Lender registered successfully!</div>
+    {% endif %}
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="{{ url_for('index') }}">⬅ Back to Home</a>
+    </p>
+  </div>
+</body>
+</html>

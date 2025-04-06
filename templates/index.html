@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeFi Loan Platform - Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>
+    function showStatusMessage(status) {
+      const resultBox = document.getElementById('result');
+      resultBox.style.display = 'block';
+      resultBox.textContent = `Loan Status: ${status}`;
+      resultBox.className = status === 'Approved' ? 'status-approved' : 'status-rejected';
+    }
+    window.onload = () => {
+      const status = '{{ status }}';
+      if (status) {
+        showStatusMessage(status);
+      }
+    };
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome to DeFi Loan Platform</h2>
+
+    {% if phone %}
+    <p>Welcome, {{ phone }} | 
+      <a href="{{ url_for('logout') }}">Logout</a> | 
+      <a href="{{ url_for('lender_dashboard') }}">Lender Dashboard</a>
+    </p>
+
+    <form id="loanForm" action="{{ url_for('apply_loan') }}" method="POST">
+      <label for="amount">Enter Loan Amount:</label>
+      <input type="number" name="amount" id="amount" required>
+
+      <label for="wallet_activity">Wallet Transactions (last 30 days):</label>
+      <input type="number" name="wallet_activity" id="wallet_activity" required>
+
+      <label for="bill_timeliness">Utility Bill Timeliness (% on-time):</label>
+      <input type="number" name="bill_timeliness" id="bill_timeliness" min="0" max="100" required>
+
+      <label for="social_score">Digital Social Activity Score (1-10):</label>
+      <input type="number" name="social_score" id="social_score" min="1" max="10" required>
+
+      <button type="submit">Apply for Loan</button>
+    </form>
+
+    <div id="result" style="display:none;"></div>
+
+    <hr>
+<h3>Make a Loan Repayment</h3>
+<form action="{{ url_for('repay_loan') }}" method="POST">
+  <label for="repay_amount">Enter Repayment Amount:</label>
+  <input type="number" name="repay_amount" id="repay_amount" required>
+  <button type="submit">Repay Loan</button>
+</form>
+
+
+    <div id="transactionHistory">
+      <h3>Your Loan Transactions</h3>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Phone</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Timestamp</th>
+        </tr>
+        {% for txn in transactions %}
+        <tr>
+          <td>{{ txn[0] }}</td>
+          <td>{{ txn[1] }}</td>
+          <td>{{ txn[2] }}</td>
+          <td>{{ txn[3] }}</td>
+          <td>{{ txn[4] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div id="repaymentHistory">
+      <h3>Your Repayment History</h3>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Phone</th>
+          <th>Amount</th>
+          <th>Timestamp</th>
+        </tr>
+        {% for txn in repayments %}
+        <tr>
+          <td>{{ txn[0] }}</td>
+          <td>{{ txn[1] }}</td>
+          <td>{{ txn[2] }}</td>
+          <td>{{ txn[3] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    
+    <div id="ledgerView">
+      <h3>Complete Blockchain Ledger</h3>
+    
+      <label for="typeFilter">Filter by Type:</label>
+      <select id="typeFilter" onchange="filterLedger()">
+        <option value="All">All</option>
+        <option value="Loan">Loan</option>
+        <option value="Repayment">Repayment</option>
+      </select>
+    
+      <table id="ledgerTable">
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>User ID</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for block in blockchain %}
+          {% if block.user_id != 'SYSTEM' %}
+          {% set type = block.transaction_data.type if block.transaction_data is mapping and 'type' in block.transaction_data else 'Loan' %}
+          {% set status = block.transaction_data.status if block.transaction_data is mapping and 'status' in block.transaction_data else ('Completed' if type == 'Repayment' else '-') %}
+          <tr class="ledger-row {{ type | lower }} {{ status | lower }}">
+            <td>{{ block.index }}</td>
+            <td>{{ block.user_id }}</td>
+            <td>{{ type }}</td>
+            <td>
+              {% if block.transaction_data is mapping and 'amount' in block.transaction_data %}
+                ₹{{ block.transaction_data.amount }}
+              {% else %}-{% endif %}
+            </td>
+            <td>{{ status }}</td>
+
+          </tr>
+          {% endif %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    
+
+    {% else %}
+    <div class="auth-links">
+      <p>
+        <a href="{{ url_for('login') }}">Login</a> |
+        <a href="{{ url_for('register') }}">Register</a> |
+        <a href="{{ url_for('add_lender') }}">Lender Registration</a> |
+        <a href="{{ url_for('lender_dashboard') }}">Lender Dashboard</a>
+      </p>
+    </div>
+    {% endif %}
+    <script>
+      function filterLedger() {
+        const filter = document.getElementById('typeFilter').value;
+        const rows = document.querySelectorAll('#ledgerTable tbody tr');
+        rows.forEach(row => {
+          if (filter === 'All' || row.classList.contains(filter.toLowerCase())) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      }
+    </script>    
+  </div>
+</body>
+</html>

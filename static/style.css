@@ -1,0 +1,203 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    margin: 0;
+    padding: 0;
+    color: #e0f7da;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    box-shadow: 0 0 25px lime;
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+h2, h3 {
+    text-align: center;
+    color: #caffbf;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    color: #e0f7da;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    box-shadow: 0 0 5px lime;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #00ff00;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+button:hover {
+    background-color: #76ff03;
+    transform: scale(1.05);
+}
+
+#result, #blockchainDisplay, #transactionHistory, #lenderInfo {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: 16px;
+    color: #caffbf;
+}
+
+.status-approved {
+    color: #00e676;
+    font-weight: bold;
+    border: 2px solid #00e676;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    background-color: rgba(0, 230, 118, 0.1);
+    border-radius: 10px;
+}
+
+.status-rejected {
+    color: #ff5252;
+    font-weight: bold;
+    border: 2px solid #ff5252;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    background-color: rgba(255, 82, 82, 0.1);
+    border-radius: 10px;
+}
+
+.success-message {
+    display: none;
+    text-align: center;
+    color: #00ff00;
+    font-size: 1.2em;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.show {
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #1c1c1c;
+    color: lime;
+    border-radius: 8px;
+    overflow: hidden;
+    animation: fadeIn 1s ease-in-out;
+}
+
+table th, table td {
+    border: 1px solid #444;
+    padding: 12px;
+    text-align: center;
+}
+
+table th {
+    background-color: #2e7d32;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
+
+a {
+    color: #b9fbc0;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: lime;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+  }
+  
+  .auth-links a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 8px 14px;
+    background-color: #2e7d32;
+    color: #e0f7da;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .auth-links a:hover {
+    background-color: limegreen;
+    color: black;
+    transform: scale(1.05);
+  }
+
+  .ledger-row.loan.approved {
+    background-color: rgba(0, 255, 0, 0.1);
+  }
+  
+  .ledger-row.loan.rejected {
+    background-color: rgba(255, 0, 0, 0.1);
+  }
+  
+  .ledger-row.repayment.completed {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  
+  .ledger-row td {
+    border-bottom: 1px solid #444;
+  }
+
+  

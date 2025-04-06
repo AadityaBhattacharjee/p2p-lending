@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lender Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .stat-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 20px lime;
+      color: #caffbf;
+      max-width: 400px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Lender Dashboard</h2>
+
+    <div class="stat-box">
+      <p><strong>Total Registered Lenders:</strong> {{ lender_count }}</p>
+      <p><strong>Total Available Funds:</strong> ₹{{ total_funds }}</p>
+    </div>
+
+    <div id="lenderList">
+      <h3>All Lenders</h3>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Funds (INR)</th>
+          <th>Registered</th>
+        </tr>
+        {% for lender in lenders %}
+        <tr>
+          <td>{{ lender[0] }}</td>
+          <td>{{ lender[1] }}</td>
+          <td>{{ lender[2] }}</td>
+          <td>{{ lender[3] }}</td>
+          <td>{{ lender[4] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="{{ url_for('index') }}">⬅ Back to Home</a>
+    </p>
+  </div>
+</body>
+</html>
